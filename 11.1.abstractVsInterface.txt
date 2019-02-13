@@ -1,0 +1,123 @@
+В чем отличия абстрактного класса от интерфейса? Приведите примеры.
+
+Отличия:
+1. Абстрактный класс объявляется словом "class". Интерфейс обявляется словом "interface".
+2. Абстрактный класс наследуется другим классом словом "extends". Интерфейс реализуется классом словом "implements".
+3. В абстрактон классе могут быть свойства. В интерфейсе свойств нет.
+4. В абстрактном классе могут быть неабстрактные методы (методы, где реализована логика их работы). В интерфейсе все методы без реализации. 
+5. В абстрактном классе методы могут быть защищенными (protected). В интерфейсе все методы публичные (public).
+6. Класс может наследовать только один абстрактный класс. Но может реализовать несколько интерфейсов.
+7. Наследник абстрактного класса может переопределить константы родителя. Константы, содержашиеся в интерфейсе, нельзя переопределять в интерфейсе-наследнике или реализующем классе.
+8. В абстрактном классе, перед абстрактным методом нужно писать слово "abstract". В интерфейсе это не нужно.
+
+Примеры:
+
+/* # # # Пример абстрактного класса AbstractClass # # # */
+
+abstract class AbstractClass
+{
+   /* Данный метод должен быть определён в дочернем классе */
+    abstract protected function getValue();
+    abstract protected function prefixValue($prefix);
+
+   /* Общий метод */
+    public function printOut() {
+        print $this->getValue() . "\n";
+    }
+}
+
+class ConcreteClass1 extends AbstractClass
+{
+    protected function getValue() {
+        return "ConcreteClass1";
+    }
+
+    public function prefixValue($prefix) {
+        return "{$prefix}ConcreteClass1";
+    }
+}
+
+/* # # # Пример абстрактного класса Fruit # # # */
+
+abstract class Fruit 
+{ 
+    private $color; 
+    
+    abstract public function eat(); 
+    
+    public function setColor($c) { 
+        $this->color = $c; 
+    } 
+} 
+
+class Apple extends Fruit
+{
+    private $exists = true;
+
+    public function eat()
+    {
+        $this->exists = false;
+    }
+}
+
+/* # # # Пример интерфейса # # # */
+
+interface iTemplate
+{
+    public function setVariable($name, $var);
+    public function getHtml($template);
+}
+
+interface iTemplate2
+{
+    const COLOR = 'blue';
+
+    public function getVariable();
+}
+
+// Реализация интерфейса
+class Template implements iTemplate, iTemplate2
+{
+    private $vars = array();
+  
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+  
+    public function getHtml($template)
+    {
+        foreach($this->vars as $name => $value) {
+            $template = str_replace('{' . $name . '}', $value, $template);
+        }
+        return $template;
+    }
+
+    public function getVariable()
+    {
+        return $this->vars;
+    }
+}
+
+/* # # # Наследование интерфейсов # # # */
+
+interface a
+{
+    public function foo();
+}
+
+interface b extends a
+{
+    public function baz($baz);
+}
+
+class c implements b
+{
+    public function foo()
+    {
+    }
+
+    public function baz($baz)
+    {
+    }
+}
