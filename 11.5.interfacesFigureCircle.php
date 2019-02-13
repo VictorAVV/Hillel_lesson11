@@ -8,6 +8,8 @@
 
 interface Figure
 {
+    const PI = 3.14;
+
     public static function getSquare();
     public static function getPerimeter();
     public static function setLineColor($color);
@@ -22,7 +24,6 @@ interface Circle
 
 class Disk implements Figure, Circle
 {
-    private static $Pi = 3.14;
     private static $radius;
     private static $lineColor = 0x000000;
 
@@ -45,11 +46,11 @@ class Disk implements Figure, Circle
     }
     public static function getSquare()
     {
-        return self::$Pi * self::$radius * self::$radius;
+        return self::PI * self::$radius * self::$radius;
     }
     public static function getPerimeter()
     {
-        return 2 * self::$Pi * self::$radius;
+        return 2 * self::PI * self::$radius;
     }
     public static function setLineColor($color)
     {
